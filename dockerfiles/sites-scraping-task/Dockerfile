@@ -6,16 +6,16 @@ MAINTAINER alex@nikitin.ninja <alex@nikitin.ninja>
 RUN apt-get update && \
 	apt-get -y upgrade && \
 	apt-get -y install \
-	apache2 \
-	php7.0 \
-	php7.0-mysql \
-	php7.0-xml \
-	php-pgsql \
-	php-curl \
-	php-xml \
-	php-mbstring \
-	php-zip \
-	libapache2-mod-php7.0 \
+	# apache2 \
+	# php7.0 \
+	# php7.0-mysql \
+	# php7.0-xml \
+	# php-pgsql \
+	# php-curl \
+	# php-xml \
+	# php-mbstring \
+	# php-zip \
+	# libapache2-mod-php7.0 \
 	curl \
 	sshpass \
 	unzip
