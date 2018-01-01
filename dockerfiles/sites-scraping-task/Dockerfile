@@ -20,11 +20,11 @@ RUN apt-get update && \
 	sshpass \
 	unzip
 
-RUN a2enmod php7.0
-RUN a2enmod rewrite
+# RUN a2enmod php7.0
+# RUN a2enmod rewrite
 
 RUN rm -rf /var/www/html/
-RUN mkdir /var/www/html/
+RUN mkdir -p /var/www/html/
 
 # Copy this folder to the project file
 ADD . /var/www/html/
