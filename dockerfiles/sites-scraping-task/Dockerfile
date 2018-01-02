@@ -16,23 +16,24 @@ RUN apt-get update && \
 	# php-mbstring \
 	# php-zip \
 	# libapache2-mod-php7.0 \
+	# curl \
+	# sshpass \
+	# unzip
+	php7.0-cli \
+	imagemagick \
+	awscli \
 	curl \
-	sshpass \
-	unzip
+	jq \
+	phantomjs \
+	xvfb
 
-# RUN a2enmod php7.0
-# RUN a2enmod rewrite
+
 
 RUN rm -rf /var/www/html/
 RUN mkdir -p /var/www/html/
 
 # Copy this folder to the project file
 ADD . /var/www/html/
-
-
-# Creating temp directory
-RUN mkdir /var/www/html/tmp/
-RUN chmod 777 /var/www/html/tmp/
 
 # Api tasks specific:
 CMD cd /var/www/html/ && \
