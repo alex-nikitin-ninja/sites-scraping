@@ -66,10 +66,41 @@ if (system.args.length < 3 || system.args.length > 5) {
             phantom.exit(1);
         } else {
             window.setTimeout(function() {
-                page.render(output);
-                console.log('success');
-                phantom.exit();
-            }, 5000);
+
+                var resultsRow = false;
+
+                page.includeJs("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", function() {
+                    console.log(1);
+                    resultsRow = page.evaluate(function() {
+                        return $(".result-row");
+                    });
+
+                    console.log(2);
+                    console.log(resultsRow);
+
+                    console.log(3);
+                    for (var i = 0; i < resultsRow.length; i++) {
+                        console.log(resultsRow[i]);
+                    }
+                    
+                    console.log(4);
+                    phantom.exit();
+                });
+
+                // // var resultsRow = page.evaluate(function() {
+                // //     return document.querySelectorAll('.result-row');
+                // // });
+
+                // var content = page.content;
+
+
+                // console.log(resultsRow);
+                // // console.log(content);
+
+                // // page.render(output);
+                // console.log('success');
+                // phantom.exit();
+            }, 3000);
         }
     });
 }

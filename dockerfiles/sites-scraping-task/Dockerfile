@@ -1,4 +1,5 @@
 # docker build -t sites-scraping-task -f dockerfiles/sites-scraping-task/Dockerfile .
+# docker run --rm -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' sites-scraping-task
 # docker run --rm -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' -d sites-scraping-task
 # docker run --rm -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' -it sites-scraping-task /bin/bash
 
@@ -23,7 +24,6 @@ RUN apt-get update && \
 	# unzip
 	php7.0-cli \
 	imagemagick \
-	awscli \
 	curl \
 	jq \
 	phantomjs \
