@@ -1,5 +1,8 @@
 # docker build -t sites-scraping-task -f dockerfiles/sites-scraping-task/Dockerfile .
 # docker run -e SITE_URL='https://google.com' -d sites-scraping-task
+# docker run -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' -d sites-scraping-task
+# docker run -e SITE_URL='https://google.com' -it sites-scraping-task /bin/bash
+
 FROM ubuntu:latest
 MAINTAINER alex@nikitin.ninja <alex@nikitin.ninja>
 
