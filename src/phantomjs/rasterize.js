@@ -1,6 +1,7 @@
 "use strict";
 var page = require('webpage').create(),
     system = require('system'),
+    fs = require('fs'),
     address, output, size, pageWidth, pageHeight;
 
 // page.customHeaders = { 'Authorization': 'Basic ' + btoa('scorecard:data!') };
@@ -67,39 +68,36 @@ if (system.args.length < 3 || system.args.length > 5) {
         } else {
             window.setTimeout(function() {
 
-                var resultsRow = false;
+                // works! - whole content
+                // var contentDom = page.evaluate(function() {
+                //     var s = new XMLSerializer();
+                //     return s.serializeToString(document);
+                // });
+                // console.log(contentDom);
+                // fs.write(output + ".txt", contentDom, 'w');
 
-                page.includeJs("https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", function() {
-                    console.log(1);
-                    resultsRow = page.evaluate(function() {
-                        return $(".result-row");
-                    });
-
-                    console.log(2);
-                    console.log(resultsRow);
-
-                    console.log(3);
-                    for (var i = 0; i < resultsRow.length; i++) {
-                        console.log(resultsRow[i]);
-                    }
-                    
-                    console.log(4);
-                    phantom.exit();
-                });
-
-                // // var resultsRow = page.evaluate(function() {
-                // //     return document.querySelectorAll('.result-row');
-                // // });
-
+                // works! - whole content
                 // var content = page.content;
+                // console.log(content);
+                // fs.write(output + ".txt", content, 'w');
+
+                // works! - only necessary css selectors elements by "querySelectorAll"
+                var resultRows = page.evaluate(function() {
+                    var r = [],
+                        elements = document.querySelectorAll('.result-row');
+                    for (var i = 0; i < elements.length; i++) {
+                        r.push(elements[i].outerHTML);
+                    }
+                    return r;
+                });
+                fs.write(output + ".json", JSON.stringify(resultRows), 'w');
+
+                // render page as pdf on letter
+                page.render(output);
 
 
-                // console.log(resultsRow);
-                // // console.log(content);
-
-                // // page.render(output);
-                // console.log('success');
-                // phantom.exit();
+                console.log('success');
+                phantom.exit();
             }, 3000);
         }
     });
