@@ -31,6 +31,8 @@ RUN apt-get update && \
 
 RUN rm -rf /var/www/html/
 RUN mkdir -p /var/www/html/
+RUN mkdir -p /var/www/html/tmp
+RUN chmod 777 /var/www/html/tmp
 
 # Copy this folder to the project file
 ADD . /var/www/html/
