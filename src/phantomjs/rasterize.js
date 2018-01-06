@@ -95,7 +95,6 @@ if (system.args.length < 3 || system.args.length > 5) {
                 // render page as pdf on letter
                 page.render(output);
 
-
                 console.log('success');
                 phantom.exit();
             }, 3000);
