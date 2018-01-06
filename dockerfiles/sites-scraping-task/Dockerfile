@@ -1,6 +1,6 @@
 # docker build -t sites-scraping-task -f dockerfiles/sites-scraping-task/Dockerfile .
 # docker run -e SITE_URL='https://google.com' -d sites-scraping-task
-# docker run -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' -d sites-scraping-task
+# docker run --rm -v /home/ubuntu/repos/private/tmp:/var/www/html/tmp -e SITE_URL='https://google.com' -d sites-scraping-task
 # docker run -e SITE_URL='https://google.com' -it sites-scraping-task /bin/bash
 
 FROM ubuntu:latest
@@ -41,5 +41,5 @@ RUN chmod 777 /var/www/html/tmp
 ADD . /var/www/html/
 
 # Api tasks specific:
-CMD cd /var/www/html/src/ && \
+CMD cd /var/www/html/ && \
 	./entryPoint.sh
