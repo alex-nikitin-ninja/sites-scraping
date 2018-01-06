@@ -42,5 +42,5 @@ ADD . /var/www/html/
 
 # Api tasks specific:
 CMD cd /var/www/html/ && \
-	printf {SITE_URL} > /var/www/html/tmp/site-url.txt && \
+	printf "${SITE_URL}" > /var/www/html/tmp/site-url.txt && \
 	./entryPoint.sh
