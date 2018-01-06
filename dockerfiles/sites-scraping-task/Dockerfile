@@ -41,5 +41,5 @@ RUN chmod 777 /var/www/html/tmp
 ADD . /var/www/html/
 
 # Api tasks specific:
-CMD cd /var/www/html/ && \
+CMD cd /var/www/html/src/ && \
 	./entryPoint.sh
