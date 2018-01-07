@@ -23,6 +23,8 @@ RUN apt-get update && \
 	# sshpass \
 	# unzip
 	php7.0-cli \
+	php7.0-dom \
+	php7.0-xml \
 	imagemagick \
 	curl \
 	jq \
