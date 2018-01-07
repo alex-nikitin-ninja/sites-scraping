@@ -3,7 +3,18 @@
 	$resultsJson = file_get_contents("tmp/results.pdf.json");
 	$resultsJson = json_decode($resultsJson, true);
 
+	$parsedResults = [];
+
 	foreach ($resultsJson as $k => $v) {
+		$oneResult = [
+			'adCaption' => '',
+			'carYear' => '',
+			'adDirectUrl' => '',
+			'carImages' => [],
+			'carPrice' => [],
+			'adTime' => [],
+		];
+
 		// print_r($v);
 
 		// WORKS via regexp!
@@ -20,10 +31,11 @@
 		$xpath = new DOMXpath($doc);
 
 		$node = $xpath->query('//*[contains(@class,"result-title")]');
-		print_r($node->item(0)->nodeValue);
-		print_r("\n");
-		print_r($node->item(0)->getAttribute("href"));
-		print_r("\n");
+		$oneResult['adDirectUrl'] = $node->item(0)->getAttribute("href");
+		$oneResult['adCaption'] = $node->item(0)->nodeValue;
+
+		preg_match("/[0-9]{4}/mi", $oneResult['adCaption'], $r);
+		$oneResult['carYear'] = count($r) > 0 ? $r[0] : '';
 
 		
 		$node = $xpath->query('//*[contains(@class,"result-image") and contains(@class,"gallery")]');
@@ -31,19 +43,27 @@
 		$node = explode(",", $node);
 		foreach ($node as $k1 => $v1) {
 			$v1 = preg_replace("/^1:/", "", $v1);
-			$src = "https://images.craigslist.org/{$v1}_600x450.jpg";
-			// $src = "https://images.craigslist.org/{$v1}_300x300.jpg";
-			print_r($src);
-			print_r("\n");
+			$img = [
+				'sm'  => "https://images.craigslist.org/{$v1}_300x300.jpg",
+				'big' => "https://images.craigslist.org/{$v1}_600x450.jpg",
+			];
+			$oneResult['carImages'][] = $img;
 		}
 
 		$node = $xpath->query('//*[contains(@class,"result-price")]');
-		print_r($node->item(0)->nodeValue);
-		print_r("\n");
+		$oneResult['carPrice']['raw']    = $node->item(0)->nodeValue;
+		$oneResult['carPrice']['parsed'] = preg_replace("/[^0-9\,\.]/mi", "", $oneResult['carPrice']['raw']);
 
-		$time = $xpath->query('//time');
-		print_r($time->item(0)->getAttribute('datetime'));
-		print_r("\n\n");
+		$node = $xpath->query('//time');
+		$oneResult['adTime']['raw']    = $node->item(0)->getAttribute('datetime');
+		$oneResult['adTime']['parsed'] = strtotime($oneResult['adTime']['raw']);
+		$oneResult['adTime']['mysql']  = date("Y-m-d H:i:s", $oneResult['adTime']['parsed']);
+
+
+		$parsedResults[] = $oneResult;
 	}
 
+	$parsedResults = json_encode($parsedResults);
+
+	echo $parsedResults;
 ?>
