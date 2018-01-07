@@ -68,7 +68,7 @@ if (system.args.length < 3 || system.args.length > 5) {
         } else {
             window.setTimeout(function() {
 
-                // works! - whole content
+                // works! - whole content - v1
                 // var contentDom = page.evaluate(function() {
                 //     var s = new XMLSerializer();
                 //     return s.serializeToString(document);
@@ -76,7 +76,7 @@ if (system.args.length < 3 || system.args.length > 5) {
                 // console.log(contentDom);
                 // fs.write(output + ".txt", contentDom, 'w');
 
-                // works! - whole content
+                // works! - whole content - v2
                 // var content = page.content;
                 // console.log(content);
                 // fs.write(output + ".txt", content, 'w');
