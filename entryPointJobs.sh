@@ -14,7 +14,7 @@ for url in $URLS; do
 	xvfb-run --auto-servernum phantomjs --version > /var/www/html/tmp/phantomjs-version.txt
 	xvfb-run --auto-servernum phantomjs src/craigslist-jobs/phantomjs/rasterize.js "$SITE_URL" "/var/www/html/tmp/results$TST.pdf" "letter"
 	php src/craigslist-jobs/php/craigslist-parser.php results$TST.pdf > /var/www/html/tmp/results-scraping-$TST.json
-	# curl -s -H "Content-Type: application/json" -X POST -d @/var/www/html/tmp/results-scraping-$TST.json https://api.nikitin.ninja/v1/scrapeJobs/storeData
+	curl -s -H "Content-Type: application/json" -X POST -d @/var/www/html/tmp/results-scraping-$TST.json https://api.nikitin.ninja/v1/scrapeJobs/storeData
 done;
 
 
