@@ -81,23 +81,23 @@ if (system.args.length < 3 || system.args.length > 5) {
                 // console.log(content);
                 // fs.write(output + ".txt", content, 'w');
 
-                // // works! - only necessary css selectors elements by "querySelectorAll"
-                // var resultRows = page.evaluate(function() {
-                //     var r = [],
-                //         elements = document.querySelectorAll('.result-row');
-                //     for (var i = 0; i < elements.length; i++) {
-                //         r.push(elements[i].outerHTML);
-                //     }
-                //     return r;
-                // });
-                // fs.write(output + ".json", JSON.stringify(resultRows), 'w');
+                // works! - only necessary css selectors elements by "querySelectorAll"
+                var resultRows = page.evaluate(function() {
+                    var r = [],
+                        elements = document.querySelectorAll('.listing-list .listing__row');
+                    for (var i = 0; i < elements.length; i++) {
+                        r.push(elements[i].outerHTML);
+                    }
+                    return r;
+                });
+                fs.write(output + ".json", JSON.stringify(resultRows), 'w');
 
                 // render page as pdf on letter
                 page.render(output);
 
                 console.log('success');
                 phantom.exit();
-            }, 30000);
+            }, 3000);
         }
     });
 }
