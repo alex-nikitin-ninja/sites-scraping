@@ -40,13 +40,22 @@
 			if($node->length>0){ $oneResult['adDescription'] = $node->item(0)->nodeValue; }
 
 			$node = $xpath->query('//*[contains(@class,"listing-item__price")]');
-			if($node->length>0){ $oneResult['adPrice'] = $node->item(0)->nodeValue; }
+			if($node->length>0){
+				$oneResult['adPrice'] = $node->item(0)->nodeValue;
+				$oneResult['adPrice'] = preg_replace("/[^0-9]/mi", "", $oneResult['adPrice']);
+			}
 
 			$node = $xpath->query('//*[contains(@class,"listing-item__year")]');
-			if($node->length>0){ $oneResult['carYear'] = $node->item(0)->nodeValue; }
+			if($node->length>0){
+				$oneResult['carYear'] = $node->item(0)->nodeValue;
+				$oneResult['carYear'] = preg_replace("/[^0-9]/mi", "", $oneResult['carYear']);
+			}
 
 			$node = $xpath->query('//*[contains(@class,"listing-item__km")]');
-			if($node->length>0){ $oneResult['carOdometer'] = $node->item(0)->nodeValue; }
+			if($node->length>0){
+				$oneResult['carOdometer'] = $node->item(0)->nodeValue;
+				$oneResult['carOdometer'] = preg_replace("/[^0-9]/mi", "", $oneResult['carOdometer']);
+			}
 
 			$node = $xpath->query('//img[contains(@class,"image") and contains(@class,"brazzers-gallery__image")]');
 			for($i=0; $i<$node->length; $i++){
