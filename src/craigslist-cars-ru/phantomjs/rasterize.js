@@ -59,6 +59,21 @@ if (system.args.length < 3 || system.args.length > 5) {
     }
 
     page.settings.userAgent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0';
+
+    var cookiesLocation = fs.workingDirectory + "/src/craigslist-cars-ru/phantomjs/cookies.json";
+    var storedCookies = [];
+    if (fs.exists(cookiesLocation)) {
+        storedCookies = fs.read(cookiesLocation);
+        storedCookies = JSON.parse(storedCookies);
+    }
+
+    for (var k in storedCookies) {
+        page.addCookie(storedCookies[k]);
+    }
+
+    console.log('cookies handled');
+    console.log( JSON.stringify(storedCookies) );
+
     page.open(address, function(status) {
         console.log("address: ");
         console.log(address);
@@ -95,6 +110,8 @@ if (system.args.length < 3 || system.args.length > 5) {
 
                 // render page as pdf on letter
                 page.render(output);
+
+                fs.write(cookiesLocation, JSON.stringify(page.cookies), 'w');
 
                 console.log('success');
                 phantom.exit();
