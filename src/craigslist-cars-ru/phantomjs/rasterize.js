@@ -71,9 +71,6 @@ if (system.args.length < 3 || system.args.length > 5) {
         page.addCookie(storedCookies[k]);
     }
 
-    console.log('cookies handled');
-    console.log( JSON.stringify(storedCookies) );
-
     page.open(address, function(status) {
         console.log("address: ");
         console.log(address);
